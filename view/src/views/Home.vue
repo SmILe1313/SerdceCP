@@ -1,12 +1,15 @@
 <template>
 	<div class="home-layout">
+		<p-header-tabs @toggle="toggleTab" :active="tabActive"/>
 
 		<div class="side">
 			<div class="placeholder"></div>
 			<p-user-list @select="selectUser" :activeId="userActiveId"/>
+			<!-- <div class="placeholder"></div> -->
 		</div>
 
 		<div class="detailed-card">
+			<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
 			<div class="placeholder"></div>
 			<div class="placeholder"></div>
 		</div>
@@ -16,19 +19,27 @@
 
 <script>
 import pUserList from '@/components/p-user-list'
+import pCircleTabs from '@/components/p-circle-tabs'
+import pHeaderTabs from '@/components/p-header-tabs'
 export default {
   data () {
     return {
+			tabActive: 'Данные',
 			userActiveId: '1234'
     }
   },
   methods: {
+		toggleTab (name) {
+			this.tabActive = name
+		},
 		selectUser (user) {
 			this.userActiveId = user.id
 		}
 	},
 	components: {
-		pUserList
+		pUserList,
+		pCircleTabs,
+		pHeaderTabs
 	}
 }
 </script>
