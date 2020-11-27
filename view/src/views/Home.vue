@@ -3,9 +3,8 @@
 		<p-header-tabs @toggle="toggleTab" :active="tabActive"/>
 
 		<div class="side">
-			<div class="placeholder"></div>
+			<p-search :filter="filter" @update="updateFilter"/>
 			<p-user-list @select="selectUser" :activeId="userActiveId"/>
-			<!-- <div class="placeholder"></div> -->
 		</div>
 
 		<div class="detailed-card">
@@ -21,25 +20,45 @@
 import pUserList from '@/components/p-user-list'
 import pCircleTabs from '@/components/p-circle-tabs'
 import pHeaderTabs from '@/components/p-header-tabs'
+import pSearch from '@/components/p-search'
 export default {
   data () {
     return {
 			tabActive: 'Данные',
-			userActiveId: '1234'
+			userActiveId: '1234',
+			filter: {
+				fio: '',
+				healthy: false,
+				hasDiagnostic: false,
+				status: '',
+				gender: ''
+			}
     }
-  },
+	},
+	watch: {
+		filter: {
+			handler (to) {
+				console.log('fetchUsers', to)
+			},
+			deep: true
+		}
+	},
   methods: {
 		toggleTab (name) {
 			this.tabActive = name
 		},
 		selectUser (user) {
 			this.userActiveId = user.id
+		},
+		updateFilter (filter) {
+			this.filter = filter
 		}
 	},
 	components: {
 		pUserList,
 		pCircleTabs,
-		pHeaderTabs
+		pHeaderTabs,
+		pSearch
 	}
 }
 </script>
@@ -74,8 +93,8 @@ export default {
 		display flex
 		flex-direction column
 		height calc(100% - 50px)
-		width 10%
-		min-width 250px
+		width 15%
+		min-width 350px
 
 	.detailed-card
 		display flex

@@ -128,17 +128,15 @@ export default {
 .list
 	display flex
 	flex-direction column
-	padding 0
+	padding 0 10px 0 0
 	margin 0
-	width 100%
 	max-height 100%
 	overflow-y auto
 	direction rtl
 
 	.list-item
 		display flex
-		padding 10px 10px 10px 80px
-		height 20px
+		padding-left 80px
 		transition all .2s ease
 		cursor pointer
 		direction ltr
@@ -146,7 +144,7 @@ export default {
 			background-color #E6EDFF
 			color #008390
 			border-radius 0px 10px 10px 0px
-		&:not(last-child)
+		&:not(:last-child)
 			margin-bottom 10px
 
 		.item-info

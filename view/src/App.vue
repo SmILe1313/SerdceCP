@@ -19,6 +19,7 @@ export default {
 @import url('fonts/stylesheet.css')
 *
   font-family 'SF Pro Display', Helvetica, Arial
+  box-sizing border-box
   &::-webkit-scrollbar 
     width 4px
     height 4px
