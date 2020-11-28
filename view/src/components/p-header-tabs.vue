@@ -57,6 +57,7 @@ export default {
 	align-items center
 	background #FFFFFF
 	box-shadow 0px 1px 15px rgba(0, 0, 0, 0.15)
+	z-index 10
 
 	.header-logo,
 	.header-user
