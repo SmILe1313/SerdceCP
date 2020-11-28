@@ -11,7 +11,7 @@ const HTTP = axios.create({
   timeout: 150000
 })
 
-const backLink = 'http://192.169.6.10:9000/'
+const backLink = 'http://192.169.6.6:9000/'
 const add = 'add/'
 const upd = 'update/'
 const del = 'delete/'
