@@ -1,6 +1,6 @@
 <template>
   <div class="search-layout">
-		<p-input v-model="filter.fio" label="Поиск" icon="search" :tool="toolComputed" @toolcall="toggleFilter"/>
+		<p-input v-model="filter.fio" label="Поиск" icon="search" :tool="toolComputed" :toolFill="hasFilter" @toolcall="toggleFilter"/>
 
     <accordion>
     <div class="filters" v-if="showFilter">
@@ -56,7 +56,10 @@ export default {
   },
   computed: {
     toolComputed () {
-      return this.filter.fio ? 'funnel-fill' : 'funnel'
+      return this.hasFilter ? 'funnel-fill' : 'funnel'
+    },
+    hasFilter () {
+      return Object.values(this.filter).filter(v => v).length > 0
     }
   },
 	components: {

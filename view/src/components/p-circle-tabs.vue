@@ -116,6 +116,8 @@ export default {
 			&.active
 				background-color #E6EDFF
 				box-shadow none
+				&:hover
+					box-shadow none
 				h5
 					color #008390
 			

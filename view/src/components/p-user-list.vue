@@ -6,13 +6,10 @@
 				:class="{ 'selected': user.id == activeId }"
 				@click="select(user)">
 
-			<div class="item-info">
-				<div class="item-desctiption">
-					<h4 class="description-label"> {{ user.fullName }} </h4>
-				</div>
-			</div>
+			<h4 class="description-label"> {{ user.fullName }} </h4>
 
     </li>
+		<div class="bot-border" key="bot"/>
   </transition-group>
 </template>
 <script>
@@ -26,37 +23,37 @@ export default {
 			users: [
 				{
 					id: 123,
-					fullName: 'Зимин А.В.',
+					fullName: 'Зимин Алексей Викторович',
 					dob: '01.02.1990'
 				},
 				{
 					id: 1234,
-					fullName: 'Островский Д.Ю.',
+					fullName: 'Островский Дмитрий Юрьевич',
 					dob: '01.02.1990'
 				},
 				{
 					id: 1235,
-					fullName: 'Меркуль Е.Ю.',
+					fullName: 'Меркуль Евгений Юрьевич',
 					dob: '01.02.1990'
 				},
 				{
 					id: 12354,
-					fullName: 'Катаранчук С.А.',
+					fullName: 'Катаранчук Станислав Александрович',
 					dob: '01.02.1990'
 				},
 				{
 					id: 1239,
-					fullName: 'Зимин А.В.',
+					fullName: 'Зимин Алексей Викторович',
 					dob: '01.02.1990'
 				},
 				{
 					id: 12357,
-					fullName: 'Меркуль Е.Ю.',
+					fullName: 'Меркуль Евгений Юрьевич',
 					dob: '01.02.1990'
 				},
 				{
 					id: 1235468,
-					fullName: 'Катаранчук С.А.',
+					fullName: 'Катаранчук Станислав Александрович',
 					dob: '01.02.1990'
 				},
 				{
@@ -132,14 +129,23 @@ export default {
 	display flex
 	flex-direction column
 	padding 0 10px 0 0
-	margin 0
-	max-height 100%
+	margin 0 0 30px 0
+	max-height calc(100% - 30px)
 	overflow-y auto
+	overflow-x hidden
 	direction rtl
+	position relative
+
+	.bot-border
+		position sticky
+		width 85%
+		right 0
+		bottom 0
+		border-bottom 1px solid #C8D8FF
 
 	.list-item
 		display flex
-		padding-left 80px
+		padding-left 52px
 		transition all .2s ease
 		cursor pointer
 		direction ltr
@@ -147,30 +153,19 @@ export default {
 			background-color #E6EDFF
 			color #008390
 			border-radius 0px 10px 10px 0px
+			margin-right 20px
 		&:not(:last-child)
 			margin-bottom 10px
 
-		.item-info
-			display flex
-			justify-content space-between
-			flex 5
+		.description-label
 			padding 10px
-
-			.item-desctiption
-				display flex
-				flex-direction column
-				justify-content center
-				flex 5
-
-				.description-label,
-				.description-dob
-					padding 0
-					margin 0
-					font-weight normal
-					white-space nowrap
-					text-align left
-				.description-dob
-					font-size 14px
+			margin 0
+			width 100%
+			font-weight normal
+			white-space nowrap
+			text-align left
+			text-overflow ellipsis
+			overflow hidden
 
 .list-move,
 .list-enter-active,

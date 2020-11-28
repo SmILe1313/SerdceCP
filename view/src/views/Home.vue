@@ -10,8 +10,7 @@
 		<div class="content">
 			<div class="detailed-card" v-if="showCardComputed">
 				<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
-				<div class="placeholder"></div>
-				<div class="placeholder"></div>
+				<p-tab-info :tab="tabActive"/>
 			</div>
 			<p-preloader :show="loading"/>
 		</div>
@@ -23,6 +22,7 @@
 import pUserList from '@/components/p-user-list'
 import pCircleTabs from '@/components/p-circle-tabs'
 import pHeaderTabs from '@/components/p-header-tabs'
+import pTabInfo from '@/components/p-tab-info'
 import pSearch from '@/components/p-search'
 import pPreloader from '@/components/p-preloader'
 export default {
@@ -102,6 +102,7 @@ export default {
 		pUserList,
 		pCircleTabs,
 		pHeaderTabs,
+		pTabInfo,
 		pSearch,
 		pPreloader
 	}

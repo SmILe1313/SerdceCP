@@ -14,7 +14,7 @@
     </label>
     <div v-if="tool"
          class="tool"
-         :class="{'fill': value}"
+         :class="{'fill': toolFill}"
          @click="toolHandler">
       <component :is="toolNameComputed"/>
     </div>
@@ -29,6 +29,7 @@ export default {
     label: String,
     icon: String,
     tool: String,
+    toolFill: [String, Boolean],
     isChanged: Boolean,
     type: {
       type: String,
