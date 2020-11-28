@@ -15,8 +15,8 @@
 			</div>
 			</transition-group>
 
-			<div class="profile-circle">
-				<userm/>
+			<div class="profile-circle" :class="status">
+				<component :is="avatar"/>
 			</div>
 
 		</div>
@@ -24,9 +24,12 @@
 </template>
 <script>
 import userm from '@/icons/profiles/userm'
+import userw from '@/icons/profiles/userw'
 export default {
 	props: {
-		active: String
+		active: String,
+		avatar: String,
+		status: String
 	},
   data () {
     return {
@@ -77,7 +80,8 @@ export default {
 		}
   },
   components: {
-	  userm
+		userm,
+		userw
   }
 }
 </script>
@@ -87,6 +91,7 @@ export default {
 	flex-direction column
 	align-items center
 	justify-content center
+	flex 2
 	flex-shrink 0
 	min-height 670px
 
@@ -142,7 +147,12 @@ export default {
 			width 50%
 			height 50%
 			border-radius 50%
-			background-color #E6EDFF
+			&.yellow
+				background-color #FFF9C8
+			&.blue
+				background-color #E6EDFF
+			&.red
+				background-color #FFE6E6
 			svg 
 				width 70%
 

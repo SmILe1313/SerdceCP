@@ -19,8 +19,8 @@ const login = 'login'
 const bs = {
 
   // Получить данные
-  getDataAsync (entityName, body) {
-    return HTTP.post(backLink + entityName, body)
+  getDataAsync (entityName) {
+    return HTTP.get(backLink + entityName)
       .then(({ data }) => {
         if (data) {
           return Promise.resolve(data)
@@ -80,17 +80,17 @@ const bs = {
 
   // Данные по конкретному пациенту
   getPatient (id) {
-    return this.getDataAsync('patients', { id })
+    return this.getDataAsync('patients/' + id)
   },
 
   // Все пациенты
-  getPatients (filter) {
-    return this.getDataAsync('patients', filter)
+  getPatients () {
+    return this.getDataAsync('patients')
   },
 
   // Получить все поля вкладки
   getFields (category) {
-    return this.getDataAsync('fields', { category } )
+    return this.getDataAsync('fields/' + category)
   },
 
   // Логинимся. В ответ придет user

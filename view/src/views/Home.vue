@@ -4,13 +4,16 @@
 
 		<div class="side">
 			<p-search :filter="filter" @update="updateFilter"/>
-			<p-user-list :users="users" @select="selectUser" :activeId="userActiveId" :search="filter.fio"/>
+			<p-user-list @select="selectUser" :activeId="userActiveId" :search="filter.fio"/>
 		</div>
 
 		<div class="content">
 			<div class="detailed-card" v-if="showCardComputed">
-				<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
-				<p-tab-info :data="tabInfo" v-if="showTabComputed"/>
+				<div class="detailed-card-top">
+					<p-circle-tabs @toggle="toggleTab" :active="tabActive" :avatar="avatarComputed" :status="statusComputed"/>
+					<p-user-info :data="userData"/>
+				</div>
+				<p-tab-info :data="userData" :label="tabActive" v-if="showTabComputed"/>
 			</div>
 			<p-preloader :show="loadingCard"/>
 		</div>
@@ -23,6 +26,7 @@ import pUserList from '@/components/p-user-list'
 import pCircleTabs from '@/components/p-circle-tabs'
 import pHeaderTabs from '@/components/p-header-tabs'
 import pTabInfo from '@/components/p-tab-info'
+import pUserInfo from '@/components/p-user-info'
 import pSearch from '@/components/p-search'
 import pPreloader from '@/components/p-preloader'
 export default {
@@ -33,7 +37,7 @@ export default {
     return {
 			tabActive: 'Данные',
 			userActiveId: this.userid,
-			users: [],
+			userData: {},
 			loadingCard: false,
 			loadingTab: false,
 			filter: {
@@ -43,7 +47,6 @@ export default {
 				status: '',
 				gender: ''
 			},
-			tabInfo: {},
 			tabs: {
         'Данные': 'data',
         'Анамнез жизни': 'life',
@@ -65,12 +68,6 @@ export default {
     }
 	},
 	watch: {
-		filter: {
-			handler (to) {
-				this.fetchUsers(to)
-			},
-			deep: true
-		},
 		userActiveId (id) {
 			this.fetchUser(id)
 			this.$router.push('/user/' + id)
@@ -80,21 +77,21 @@ export default {
 		}
 	},
 	created () {
+		this.fetchFields()
 		if (this.userActiveId) {
 			this.fetchUser(this.userActiveId)
 		}
-		this.fetchUsers(this.filter)
-		this.fetchFields()
 	},
   methods: {
-
 		// Получить данные по пользователю
 		fetchUser (id) {
 			this.loadingCard = true
+			this.userData = {}
 			this.$bs.getPatient(id)
-			setTimeout(() => {
-				this.loadingCard = false
-			}, 1000)
+				.then(data => {
+					this.userData = data
+					setTimeout(() => { this.loadingCard = false }, 1000)
+				})
 		},
 
 		// Получить набор полей вкладки
@@ -104,20 +101,7 @@ export default {
 				this.loadingTab = false
 			})
 		},
-
-		// Получить список пользователей
-		fetchUsers (filters) {
-			const fields = Object.keys(filters).filter(key => filters[key])
-			let requestParams = fields.reduce((acc, key) => ({ ...acc, [key]: filters[key] }), {})
-			const { status, gender } = requestParams
-			if (status) {
-				requestParams.status = this.filterStatusmatrix[status]
-			}
-			if (gender) {
-				requestParams.gender = this.genderMatrix[gender]
-			}
-			this.$bs.getPatients(requestParams)
-		},
+		
 		toggleTab (name) {
 			this.tabActive = name
 		},
@@ -130,19 +114,35 @@ export default {
 	},
 	computed: {
 		showCardComputed () {
-			return this.userActiveId && !this.loading
+			return this.userActiveId && !this.loadingCard
 		},
 		showTabComputed () {
 			return !this.loadingTab
 		},
 		tabName () {
       return this.tabs[this.tabActive]
-    }
+		},
+		avatarComputed () {
+			const avatarMatrix = {
+				'Ж': 'userw',
+				'М': 'userm'
+			}
+			return avatarMatrix[this.userData.pol || 'М']
+		},
+		statusComputed () {
+			const statusMatrix = {
+				'questionable': 'yellow',
+				'sick': 'red',
+				'notsick': 'blue'
+			}
+			return statusMatrix[this.userData.healthStatus || 'notsick']
+		}
 	},
 	components: {
 		pUserList,
 		pCircleTabs,
 		pHeaderTabs,
+		pUserInfo,
 		pTabInfo,
 		pSearch,
 		pPreloader
@@ -190,6 +190,9 @@ export default {
 		flex-direction column
 		flex 1
 		height 100%
-	.detailed-card	
+		padding-bottom 50px
 		overflow-y auto
+
+		.detailed-card-top
+			display flex
 </style>

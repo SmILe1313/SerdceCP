@@ -1,12 +1,26 @@
 <template>
-  <div>
+  <div class="info-layout">
+    <h2 class="label">{{label}}</h2>
 
+    <div v-for="field in fields"
+        :key="field.name"
+        class="field"
+        :class="field.type">
+        <component :is="field.widget" v-model="data[field.name]" :label="field.label"/>
+    </div>
   </div>
 </template>
 
 <script>
+// input/date/select/checkbox/textarea/graph
+import pInput from './p-input'
+import pCheckbox from './p-checkbox'
+import pRadio from './p-radio'
+import pTextarea from './p-textarea'
 export default {
   props: {
+    label: String,
+    fields: Array,
 		data: Object
 	},
   data () {
@@ -18,10 +32,31 @@ export default {
   methods: {
   },
   computed: {
+  },
+  components: {
+    pInput,
+    pCheckbox,
+    pRadio,
+    pTextarea
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.info-layout
+  display flex
+  border 2px solid #C8D8FF
+  border-radius 20px
+  padding 50px
+  margin 50px
+  position relative
+  .label
+    position absolute
+    top -22px
+    left 30px
+    margin 0
+    padding 5px 15px
+    background-color white
+    font-weight 500
 
 </style>

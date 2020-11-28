@@ -6,7 +6,7 @@
 				:class="{ 'selected': user.id == activeId }"
 				@click="select(user)">
 
-			<h4 class="description-label"> {{ user.fullName }} </h4>
+			<h4 class="description-label"> {{ user.fio }} </h4>
 
     </li>
 		<div class="bot-border" key="bot"/>
@@ -20,95 +20,14 @@ export default {
 	},
   data () {
     return {
-			users: [
-				{
-					id: 123,
-					fullName: 'Зимин Алексей Викторович',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1234,
-					fullName: 'Островский Дмитрий Юрьевич',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235,
-					fullName: 'Меркуль Евгений Юрьевич',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12354,
-					fullName: 'Катаранчук Станислав Александрович',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1239,
-					fullName: 'Зимин Алексей Викторович',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12357,
-					fullName: 'Меркуль Евгений Юрьевич',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235468,
-					fullName: 'Катаранчук Станислав Александрович',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12353,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12352,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235133,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235144,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235155,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 1235166,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12351661,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 12351662,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				},
-				{
-					id: 123516613,
-					fullName: 'John Doe',
-					dob: '01.02.1990'
-				}
-			]
+			users: []
     }
 	},
   created () {
-		// this.$bs.getPatients()
-		// 	.then(users => {
-		// 		this.users = users
-		// 	})
+		this.$bs.getPatients()
+			.then(data => {
+				this.users = data
+			})
   },
   methods: {
 		select (user) {
@@ -117,7 +36,7 @@ export default {
   },
   computed: {
 		usersFiltered () {
-			return this.users.filter(user => user.fullName.toLowerCase().includes(this.search.toLowerCase()))
+			return this.users.filter(user => user.fio.toLowerCase().includes(this.search.toLowerCase()))
 		}
   },
   components: {
