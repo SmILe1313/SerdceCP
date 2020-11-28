@@ -9,7 +9,7 @@
             v-on="listenersComputed"
         />
     <label class="text-field_label_floating">
-      <span><component :is="iconNameComputed"/></span>
+      <span v-if="iconNameComputed"><component :is="iconNameComputed"/></span>
       {{label}}
     </label>
     <div v-if="tool"

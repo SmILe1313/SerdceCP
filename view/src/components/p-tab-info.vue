@@ -6,7 +6,7 @@
         :key="field.name"
         class="field"
         :class="field.type">
-        <component :is="field.widget" v-model="data[field.name]" :label="field.label"/>
+        <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
   </div>
 </template>
@@ -17,19 +17,17 @@ import pInput from './p-input'
 import pCheckbox from './p-checkbox'
 import pRadio from './p-radio'
 import pTextarea from './p-textarea'
+import pSelectbox from './p-selectbox'
 export default {
   props: {
     label: String,
     fields: Array,
 		data: Object
 	},
-  data () {
-    return {
-    }
-  },
-  created () {
-  },
   methods: {
+    getWidget (widget) {
+      return 'p-' + widget
+    }
   },
   computed: {
   },
@@ -37,14 +35,17 @@ export default {
     pInput,
     pCheckbox,
     pRadio,
-    pTextarea
+    pTextarea,
+    pSelectbox
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .info-layout
-  display flex
+  display grid
+  grid-template-columns repeat(auto-fill, minmax(250px, 1fr))
+  grid-gap 40px
   border 2px solid #C8D8FF
   border-radius 20px
   padding 50px

@@ -13,7 +13,7 @@
 					<p-circle-tabs @toggle="toggleTab" :active="tabActive" :avatar="avatarComputed" :status="statusComputed"/>
 					<p-user-info :data="userData"/>
 				</div>
-				<p-tab-info :data="userData" :label="tabActive" v-if="showTabComputed"/>
+				<p-tab-info :data="userData" :fields="fields" :label="tabActive" v-if="showTabComputed"/>
 			</div>
 			<p-preloader :show="loadingCard"/>
 		</div>
@@ -38,6 +38,7 @@ export default {
 			tabActive: 'Данные',
 			userActiveId: this.userid,
 			userData: {},
+			fields: [],
 			loadingCard: false,
 			loadingTab: false,
 			filter: {
@@ -97,9 +98,11 @@ export default {
 		// Получить набор полей вкладки
 		fetchFields () {
 			this.loadingTab = true
-			this.$bs.getFields(this.tabName).then(resp => {
-				this.loadingTab = false
-			})
+			this.$bs.getFields(this.tabName)
+				.then(fields => {
+					this.fields = fields
+					this.loadingTab = false
+				})
 		},
 		
 		toggleTab (name) {
