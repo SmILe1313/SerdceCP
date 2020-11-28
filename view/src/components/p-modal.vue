@@ -15,8 +15,8 @@
         <h4>Рекомендации</h4>
       </div>
       <div class="row">
-        <template v-if="user.predict">
-        {{user.predict}}
+        <template v-if="user.recommends">
+        {{user.recommends}}
         </template>
         <template v-else>
           <p>— Физическая активность. Это любой вид спорта, в старшем возрасте — в щадящем режиме, или 30-40 минут ходьбы, если вы никогда активно не занимались спортом.
