@@ -1,4 +1,5 @@
 <template>
+  <transition name="slide" appear>
   <div class="user-info-layout">
     <h2 class="label">{{data.fio}}</h2>
 
@@ -9,6 +10,7 @@
     </div>
 
   </div>
+  </transition>
 </template>
 
 <script>
@@ -54,4 +56,9 @@ export default {
     span
       margin-left 30px
 
+.slide-enter-active
+  transition transform .5s ease
+
+.slide-enter
+  transform translateX(100%)
 </style>

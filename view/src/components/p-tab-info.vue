@@ -8,6 +8,9 @@
         :class="field.widget">
         <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
+    <div class="row">
+      <p-button @click="$emit('save')" label="Сохранить"/>
+    </div>
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import pRadio from './p-radio'
 import pTextarea from './p-textarea'
 import pSelectbox from './p-selectbox'
 import pGraph from './p-graph'
+import pButton from './p-button'
 export default {
   props: {
     label: String,
@@ -30,15 +34,14 @@ export default {
       return 'p-' + widget
     }
   },
-  computed: {
-  },
   components: {
     pInput,
     pCheckbox,
     pRadio,
     pTextarea,
     pSelectbox,
-    pGraph
+    pGraph,
+    pButton
   }
 }
 </script>
@@ -62,7 +65,12 @@ export default {
     background-color white
     font-weight 500
 
-  .graph
+  .graph,
+  .row
     grid-column 1 / -1
+
+  .row
+    display flex
+    justify-content flex-end
 
 </style>

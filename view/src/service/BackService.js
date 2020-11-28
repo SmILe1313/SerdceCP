@@ -50,7 +50,8 @@ const bs = {
 
   // Обновить объект
   updateAsync (entityName, entity) {
-    return HTTP.put(backLink + upd + entityName, entity)
+    const { id } = entity
+    return HTTP.put(backLink + upd + entityName + `/${id}`, entity)
       .then(({ data }) => {
         if (data) {
           return Promise.resolve(data)

@@ -9,11 +9,13 @@
 
 		<div class="content">
 			<div class="detailed-card" v-if="showCardComputed">
+
 				<div class="detailed-card-top">
 					<p-circle-tabs @toggle="toggleTab" :active="tabActive" :avatar="avatarComputed" :status="statusComputed"/>
 					<p-user-info :data="userData"/>
 				</div>
-				<p-tab-info :data="userData" :fields="fields" :label="tabActive" v-if="showTabComputed"/>
+
+				<p-tab-info v-if="showTabComputed" :data="userData" :fields="fields" :label="tabActive"  @save="updateInfo"/>
 			</div>
 			<p-preloader :show="loadingCard"/>
 		</div>
@@ -103,6 +105,12 @@ export default {
 					this.fields = fields
 					this.loadingTab = false
 				})
+		},
+
+		// Обновляем запись
+		updateInfo () {
+			this.$bs.updateAsync('patients', this.userData)
+				.then(_ => this.fetchUser(this.userActiveId))
 		},
 		
 		toggleTab (name) {
