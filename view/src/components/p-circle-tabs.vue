@@ -15,7 +15,8 @@
 			</div>
 			</transition-group>
 
-			<div class="profile-circle" :class="status">
+			<div class="profile-circle" :class="status" @click="showPredict">
+				<b-icon-question-circle class="info"/>
 				<component :is="avatar"/>
 			</div>
 
@@ -57,6 +58,9 @@ export default {
 		}
   },
   methods: {
+		showPredict () {
+			this.$emit('show-predict')
+		},
 		toggle (name) {
 			this.$emit('toggle', name)
 		},
@@ -147,6 +151,13 @@ export default {
 			width 50%
 			height 50%
 			border-radius 50%
+			position relative
+			cursor pointer
+			.info
+				position absolute
+				width 40px
+				top 15%
+				right 15%
 			&.yellow
 				background-color #FFF9C8
 			&.blue

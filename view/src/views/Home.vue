@@ -1,5 +1,6 @@
 <template>
 	<div class="home-layout">
+		<p-modal v-show="showDetailed" @close="showDetailed = false" :user="userData" :status="statusComputed"/>
 		<p-header-tabs @toggle="toggleTab" :active="tabActive"/>
 
 		<div class="side" v-if="users.length">
@@ -11,7 +12,7 @@
 			<div class="detailed-card" v-if="showCardComputed">
 
 				<div class="detailed-card-top">
-					<p-circle-tabs @toggle="toggleTab" :active="tabActive" :avatar="avatarComputed" :status="statusComputed"/>
+					<p-circle-tabs @toggle="toggleTab" @show-predict="showPredict" :active="tabActive" :avatar="avatarComputed" :status="statusComputed"/>
 					<p-user-info :data="userData"/>
 				</div>
 
@@ -32,6 +33,7 @@ import pTabInfo from '@/components/p-tab-info'
 import pUserInfo from '@/components/p-user-info'
 import pSearch from '@/components/p-search'
 import pPreloader from '@/components/p-preloader'
+import pModal from '@/components/p-modal'
 export default {
 	props: {
 		userid: String
@@ -43,6 +45,7 @@ export default {
 			userData: {},
 			users: [],
 			fields: [],
+			showDetailed: false,
 			loadingCard: false,
 			loadingTab: false,
 			filter: {
@@ -89,6 +92,9 @@ export default {
 		}
 	},
   methods: {
+		showPredict () {
+			this.showDetailed = !this.showDetailed
+		},
 		fetchPatients () {
 			this.$bs.getPatients()
 				.then(data => {
@@ -166,7 +172,8 @@ export default {
 		pUserInfo,
 		pTabInfo,
 		pSearch,
-		pPreloader
+		pPreloader,
+		pModal
 	}
 }
 </script>
