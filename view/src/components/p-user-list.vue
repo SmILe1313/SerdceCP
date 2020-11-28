@@ -48,8 +48,8 @@ export default {
 	display flex
 	flex-direction column
 	padding 0 10px 0 0
-	margin 0 0 30px 0
-	max-height calc(100% - 30px)
+	margin 0 0 50px 0
+	max-height calc(100% - 50px)
 	overflow-y auto
 	overflow-x hidden
 	direction rtl

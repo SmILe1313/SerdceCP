@@ -193,8 +193,10 @@ export default {
 		flex-direction column
 		flex 1
 		height 100%
-		padding-bottom 50px
 		overflow-y auto
+
+	.content
+		padding-bottom 50px
 
 		.detailed-card-top
 			display flex
