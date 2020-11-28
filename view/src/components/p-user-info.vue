@@ -42,7 +42,7 @@ export default {
   border 2px solid #C8D8FF
   border-radius 20px
   padding 30px
-  margin 50px
+  margin auto 50px
   height 380px
   .label
     margin 0
