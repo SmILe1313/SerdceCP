@@ -39,8 +39,14 @@ export default {
 @keyframes throb
   0%
     transform scale(.5)
+  20%
+    transform scale(.9)
+  30%
+    transform scale(.7)
   50%
-    transform scale(1)
+    transform scale(.9)
+  80%
+    transform scale(.9)
   100%
     transform scale(.5)
 

@@ -8,7 +8,7 @@
         :class="field.widget">
         <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
-    <div class="row">
+    <div class="row" v-if="fields.length">
       <p-button @click="$emit('save')" label="Сохранить"/>
     </div>
   </div>
@@ -64,6 +64,10 @@ export default {
     padding 5px 15px
     background-color white
     font-weight 500
+
+  .field
+    display grid
+    align-items center
 
   .graph,
   .row

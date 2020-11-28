@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    value: Boolean,
+    value: [Boolean, String],
     label: String
   },
   model: {

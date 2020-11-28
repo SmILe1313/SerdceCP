@@ -2,9 +2,9 @@
 	<div class="home-layout">
 		<p-header-tabs @toggle="toggleTab" :active="tabActive"/>
 
-		<div class="side">
+		<div class="side" v-if="users.length">
 			<p-search :filter="filter" @update="updateFilter"/>
-			<p-user-list @select="selectUser" :activeId="userActiveId" :search="filter.fio"/>
+			<p-user-list @select="selectUser" :users="users" :activeId="userActiveId" :search="filter.fio"/>
 		</div>
 
 		<div class="content">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import accordion from '@/components/accordion'
 import pUserList from '@/components/p-user-list'
 import pCircleTabs from '@/components/p-circle-tabs'
 import pHeaderTabs from '@/components/p-header-tabs'
@@ -40,6 +41,7 @@ export default {
 			tabActive: 'Данные',
 			userActiveId: this.userid,
 			userData: {},
+			users: [],
 			fields: [],
 			loadingCard: false,
 			loadingTab: false,
@@ -81,11 +83,18 @@ export default {
 	},
 	created () {
 		this.fetchFields()
+		this.fetchPatients()
 		if (this.userActiveId) {
 			this.fetchUser(this.userActiveId)
 		}
 	},
   methods: {
+		fetchPatients () {
+			this.$bs.getPatients()
+				.then(data => {
+					this.users = data
+				})
+		},
 		// Получить данные по пользователю
 		fetchUser (id) {
 			this.loadingCard = true
@@ -93,7 +102,7 @@ export default {
 			this.$bs.getPatient(id)
 				.then(data => {
 					this.userData = data
-					setTimeout(() => { this.loadingCard = false }, 1000)
+					setTimeout(() => { this.loadingCard = false }, 1500)
 				})
 		},
 
@@ -103,7 +112,7 @@ export default {
 			this.$bs.getFields(this.tabName)
 				.then(fields => {
 					this.fields = fields
-					this.loadingTab = false
+					setTimeout(() => { this.loadingTab = false }, 1000)
 				})
 		},
 
@@ -150,6 +159,7 @@ export default {
 		}
 	},
 	components: {
+		accordion,
 		pUserList,
 		pCircleTabs,
 		pHeaderTabs,

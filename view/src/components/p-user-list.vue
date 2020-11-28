@@ -16,19 +16,9 @@
 export default {
 	props: {
 		activeId: [Number, String],
-		search: String
+		search: String,
+		users: Array
 	},
-  data () {
-    return {
-			users: []
-    }
-	},
-  created () {
-		this.$bs.getPatients()
-			.then(data => {
-				this.users = data
-			})
-  },
   methods: {
 		select (user) {
 			this.$emit('select', user)
@@ -39,8 +29,6 @@ export default {
 			return this.users.filter(user => user.fio.toLowerCase().includes(this.search.toLowerCase()))
 		}
   },
-  components: {
-	}
 }
 </script>
 <style lang="stylus" scoped>
