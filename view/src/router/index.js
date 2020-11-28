@@ -18,6 +18,12 @@ const routes = [
     component: Home
   },
   {
+    path: '/user/:userid',
+    name: 'User',
+    props: true,
+    component: Home
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login

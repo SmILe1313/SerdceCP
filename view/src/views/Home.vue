@@ -7,10 +7,13 @@
 			<p-user-list :users="users" @select="selectUser" :activeId="userActiveId" :search="filter.fio"/>
 		</div>
 
-		<div class="detailed-card">
-			<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
-			<div class="placeholder"></div>
-			<div class="placeholder"></div>
+		<div class="content">
+			<div class="detailed-card" v-if="showCardComputed">
+				<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
+				<div class="placeholder"></div>
+				<div class="placeholder"></div>
+			</div>
+			<p-preloader :show="loading"/>
 		</div>
 
   </div>
@@ -21,12 +24,17 @@ import pUserList from '@/components/p-user-list'
 import pCircleTabs from '@/components/p-circle-tabs'
 import pHeaderTabs from '@/components/p-header-tabs'
 import pSearch from '@/components/p-search'
+import pPreloader from '@/components/p-preloader'
 export default {
+	props: {
+		userid: String
+	},
   data () {
     return {
 			tabActive: 'Данные',
-			userActiveId: '1234',
+			userActiveId: this.userid,
 			users: [],
+			loading: false,
 			filter: {
 				fio: '',
 				requiresAttention: false,
@@ -52,6 +60,13 @@ export default {
 				this.fetchUsers(to)
 			},
 			deep: true
+		},
+		userActiveId (to) {
+			this.loading = true
+			this.$router.push('/user/' + to)
+			setTimeout(() => {
+				this.loading = false
+			}, 1000)
 		}
 	},
   methods: {
@@ -78,11 +93,17 @@ export default {
 			this.filter = filter
 		}
 	},
+	computed: {
+		showCardComputed () {
+			return this.userActiveId && !this.loading
+		}
+	},
 	components: {
 		pUserList,
 		pCircleTabs,
 		pHeaderTabs,
-		pSearch
+		pSearch,
+		pPreloader
 	}
 }
 </script>
@@ -120,10 +141,13 @@ export default {
 		width 15%
 		min-width 350px
 
+	.content,
 	.detailed-card
+		position relative
 		display flex
 		flex-direction column
 		flex 1
 		height 100%
+	.detailed-card	
 		overflow-y auto
 </style>
