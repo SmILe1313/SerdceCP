@@ -2,6 +2,7 @@
   <div class="text-field">
     <input  class="text-field_input"
             :class="{ 'text-field_input_filled': value,
+                      'text-field_input_tool': tool,
                     'fieldset_group_field--changed': isChanged }"
             :type="type"
             :value="value"
@@ -99,6 +100,8 @@ export default {
     font-size inherit
     border-radius 10px
     border 1px solid #C8D8FF
+    &_tool
+      padding-right 40px
 
     ~ label
         color #9e9e9e

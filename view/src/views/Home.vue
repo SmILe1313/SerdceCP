@@ -134,11 +134,11 @@ export default {
 		},
 		statusComputed () {
 			const statusMatrix = {
-				'questionable': 'yellow',
-				'sick': 'red',
-				'notsick': 'blue'
+				'Обследуется/На лечении': 'yellow',
+				'Болен': 'red',
+				'Не болен': 'blue'
 			}
-			return statusMatrix[this.userData.healthStatus || 'notsick']
+			return statusMatrix[this.userData.isSick]
 		}
 	},
 	components: {

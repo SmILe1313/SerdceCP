@@ -5,7 +5,7 @@
     <div v-for="field in fields"
         :key="field.name"
         class="field"
-        :class="field.type">
+        :class="field.widget">
         <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
   </div>
@@ -18,6 +18,7 @@ import pCheckbox from './p-checkbox'
 import pRadio from './p-radio'
 import pTextarea from './p-textarea'
 import pSelectbox from './p-selectbox'
+import pGraph from './p-graph'
 export default {
   props: {
     label: String,
@@ -36,7 +37,8 @@ export default {
     pCheckbox,
     pRadio,
     pTextarea,
-    pSelectbox
+    pSelectbox,
+    pGraph
   }
 }
 </script>
@@ -59,5 +61,8 @@ export default {
     padding 5px 15px
     background-color white
     font-weight 500
+
+  .graph
+    grid-column 1 / -1
 
 </style>
