@@ -19,8 +19,8 @@ const login = 'login'
 const bs = {
 
   // Получить данные
-  getDataAsync (entityName) {
-    return HTTP.get(backLink + entityName)
+  getDataAsync (entityName, body) {
+    return HTTP.post(backLink + entityName, body)
       .then(({ data }) => {
         if (data) {
           return Promise.resolve(data)
@@ -79,8 +79,8 @@ const bs = {
   },
 
   // Все пациенты
-  getPatients () {
-    return this.getDataAsync('patients')
+  getPatients (filter) {
+    return this.getDataAsync('patients', filter)
   },
 
   // Получить все поля опросника

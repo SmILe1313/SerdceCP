@@ -1,6 +1,6 @@
 <template>
-  <ul class="list">
-    <li v-for="user in users"
+  <transition-group name="list" class="list" tag="ul" mode="out-in">
+    <li v-for="user in usersFiltered"
 				:key="user.id"
 				class="list-item"
 				:class="{ 'selected': user.id == activeId }"
@@ -13,12 +13,13 @@
 			</div>
 
     </li>
-  </ul>
+  </transition-group>
 </template>
 <script>
 export default {
 	props: {
-		activeId: [Number, String]
+		activeId: [Number, String],
+		search: String
 	},
   data () {
     return {
@@ -31,8 +32,7 @@ export default {
 				{
 					id: 1234,
 					fullName: 'Островский Д.Ю.',
-					dob: '01.02.1990',
-					selected: true
+					dob: '01.02.1990'
 				},
 				{
 					id: 1235,
@@ -106,7 +106,7 @@ export default {
 				}
 			]
     }
-  },
+	},
   created () {
 		// this.$bs.getPatients()
 		// 	.then(users => {
@@ -119,6 +119,9 @@ export default {
 		}
   },
   computed: {
+		usersFiltered () {
+			return this.users.filter(user => user.fullName.toLowerCase().includes(this.search.toLowerCase()))
+		}
   },
   components: {
 	}
@@ -169,4 +172,14 @@ export default {
 				.description-dob
 					font-size 14px
 
+.list-move,
+.list-enter-active,
+.list-leave-active
+	transition all .5s ease
+
+
+.list-enter,
+.list-leave-to
+	opacity 0
+	transform scale(1, .5)
 </style>

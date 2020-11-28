@@ -4,7 +4,7 @@
 
 		<div class="side">
 			<p-search :filter="filter" @update="updateFilter"/>
-			<p-user-list @select="selectUser" :activeId="userActiveId"/>
+			<p-user-list :users="users" @select="selectUser" :activeId="userActiveId" :search="filter.fio"/>
 		</div>
 
 		<div class="detailed-card">
@@ -26,12 +26,22 @@ export default {
     return {
 			tabActive: 'Данные',
 			userActiveId: '1234',
+			users: [],
 			filter: {
 				fio: '',
-				healthy: false,
+				requiresAttention: false,
 				hasDiagnostic: false,
 				status: '',
 				gender: ''
+			},
+			// Справочные данные
+			filterStatusmatrix: {
+				'На лечении': 'onTreatment',
+				'Обследуется': 'examined'
+			},
+			genderMatrix: {
+				'Мужчина': 'male',
+				'Женщина': 'female'
 			}
     }
 	},
@@ -39,11 +49,25 @@ export default {
 		filter: {
 			handler (to) {
 				console.log('fetchUsers', to)
+				this.fetchUsers(to)
 			},
 			deep: true
 		}
 	},
   methods: {
+		// Запрашиваю список пользователей
+		fetchUsers (filters) {
+			const fields = Object.keys(filters).filter(key => filters[key])
+			let requestParams = fields.reduce((acc, key) => ({ ...acc, [key]: filters[key] }), {})
+			const { status, gender } = requestParams
+			if (status) {
+				requestParams.status = this.filterStatusmatrix[status]
+			}
+			if (gender) {
+				requestParams.gender = this.genderMatrix[gender]
+			}
+			this.$bs.getPatients(requestParams)
+		},
 		toggleTab (name) {
 			this.tabActive = name
 		},

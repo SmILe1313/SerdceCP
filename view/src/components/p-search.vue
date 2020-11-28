@@ -6,7 +6,7 @@
     <div class="filters" v-if="showFilter">
       <div class="filter-group">
         <div class="filter-item">
-          <p-checkbox v-model="filter.healthy" label="Требует внимания"/>
+          <p-checkbox v-model="filter.requiresAttention" label="Требует внимания"/>
         </div>
         <div class="filter-item">
           <p-checkbox v-model="filter.hasDiagnostic" label="Есть диагноз"/>
