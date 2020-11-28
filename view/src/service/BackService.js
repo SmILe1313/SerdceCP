@@ -78,14 +78,19 @@ const bs = {
       })
   },
 
+  // Данные по конкретному пациенту
+  getPatient (id) {
+    return this.getDataAsync('patients', { id })
+  },
+
   // Все пациенты
   getPatients (filter) {
     return this.getDataAsync('patients', filter)
   },
 
-  // Получить все поля опросника
-  getFields () {
-    return this.getDataAsync('fields')
+  // Получить все поля вкладки
+  getFields (category) {
+    return this.getDataAsync('fields', { category } )
   },
 
   // Логинимся. В ответ придет user

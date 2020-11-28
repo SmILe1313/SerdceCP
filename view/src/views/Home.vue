@@ -10,9 +10,9 @@
 		<div class="content">
 			<div class="detailed-card" v-if="showCardComputed">
 				<p-circle-tabs @toggle="toggleTab" :active="tabActive"/>
-				<p-tab-info :tab="tabActive"/>
+				<p-tab-info :data="tabInfo" v-if="showTabComputed"/>
 			</div>
-			<p-preloader :show="loading"/>
+			<p-preloader :show="loadingCard"/>
 		</div>
 
   </div>
@@ -34,7 +34,8 @@ export default {
 			tabActive: 'Данные',
 			userActiveId: this.userid,
 			users: [],
-			loading: false,
+			loadingCard: false,
+			loadingTab: false,
 			filter: {
 				fio: '',
 				requiresAttention: false,
@@ -42,6 +43,16 @@ export default {
 				status: '',
 				gender: ''
 			},
+			tabInfo: {},
+			tabs: {
+        'Данные': 'data',
+        'Анамнез жизни': 'life',
+        'Анамнез заболевания': 'disease',
+				'Лабораторное обследование': 'laboratory',
+				'Инструментальное обследование': 'instrumental',
+        'Диагноз': 'diagnosis',
+        'Лечение': 'therapy'
+      },
 			// Справочные данные
 			filterStatusmatrix: {
 				'На лечении': 'onTreatment',
@@ -56,21 +67,45 @@ export default {
 	watch: {
 		filter: {
 			handler (to) {
-				console.log('fetchUsers', to)
 				this.fetchUsers(to)
 			},
 			deep: true
 		},
-		userActiveId (to) {
-			this.loading = true
-			this.$router.push('/user/' + to)
-			setTimeout(() => {
-				this.loading = false
-			}, 1000)
+		userActiveId (id) {
+			this.fetchUser(id)
+			this.$router.push('/user/' + id)
+		},
+		tabActive () {
+			this.fetchFields()
 		}
 	},
+	created () {
+		if (this.userActiveId) {
+			this.fetchUser(this.userActiveId)
+		}
+		this.fetchUsers(this.filter)
+		this.fetchFields()
+	},
   methods: {
-		// Запрашиваю список пользователей
+
+		// Получить данные по пользователю
+		fetchUser (id) {
+			this.loadingCard = true
+			this.$bs.getPatient(id)
+			setTimeout(() => {
+				this.loadingCard = false
+			}, 1000)
+		},
+
+		// Получить набор полей вкладки
+		fetchFields () {
+			this.loadingTab = true
+			this.$bs.getFields(this.tabName).then(resp => {
+				this.loadingTab = false
+			})
+		},
+
+		// Получить список пользователей
 		fetchUsers (filters) {
 			const fields = Object.keys(filters).filter(key => filters[key])
 			let requestParams = fields.reduce((acc, key) => ({ ...acc, [key]: filters[key] }), {})
@@ -96,7 +131,13 @@ export default {
 	computed: {
 		showCardComputed () {
 			return this.userActiveId && !this.loading
-		}
+		},
+		showTabComputed () {
+			return !this.loadingTab
+		},
+		tabName () {
+      return this.tabs[this.tabActive]
+    }
 	},
 	components: {
 		pUserList,
