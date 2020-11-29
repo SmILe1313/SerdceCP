@@ -9,7 +9,8 @@
         <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
     <div class="row" v-if="fields.length">
-      <p-button @click="$emit('save')" label="Сохранить"/>
+      <p-button @click="$emit('predictall')" label="Анализировать" key="analyze" v-if="label == 'Диагноз'"/>
+      <p-button @click="$emit('save')" label="Сохранить" key="save" v-else/>
     </div>
   </div>
 </template>
@@ -23,6 +24,7 @@ import pTextarea from './p-textarea'
 import pSelectbox from './p-selectbox'
 import pGraph from './p-graph'
 import pButton from './p-button'
+import pIndicator from './p-indicator'
 export default {
   props: {
     label: String,
@@ -41,7 +43,8 @@ export default {
     pTextarea,
     pSelectbox,
     pGraph,
-    pButton
+    pButton,
+    pIndicator
   }
 }
 </script>

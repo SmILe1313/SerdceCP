@@ -16,7 +16,7 @@
 					<p-user-info :data="userData"/>
 				</div>
 
-				<p-tab-info v-if="showTabComputed" :data="userData" :fields="fields" :label="tabActive"  @save="updateInfo"/>
+				<p-tab-info v-if="showTabComputed" :data="userData" :fields="fields" :label="tabActive"  @save="updateInfo" @predictall="getPredict"/>
 			</div>
 			<p-preloader :show="loadingCard"/>
 		</div>
@@ -92,6 +92,12 @@ export default {
 		}
 	},
   methods: {
+		getPredict () {
+			this.$bs.getPredictAsync(this.users)
+				.then(data => {
+					console.log(data)
+				})
+		},
 		showPredict () {
 			this.showDetailed = !this.showDetailed
 		},

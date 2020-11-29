@@ -15,7 +15,7 @@
 			</div>
 			</transition-group>
 
-			<div class="profile-circle" :class="status" @click="showPredict">
+			<div class="profile-circle" :class="status" @click.stop="showPredict">
 				<b-icon-question-circle class="info"/>
 				<component :is="avatar"/>
 			</div>
@@ -153,6 +153,7 @@ export default {
 			border-radius 50%
 			position relative
 			cursor pointer
+			overflow hidden
 			.info
 				position absolute
 				width 40px

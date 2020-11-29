@@ -33,6 +33,22 @@ const bs = {
       })
   },
 
+  // Получить предсказание
+  getPredictAsync (entity) {
+    const { id } = entity
+    return HTTP.post(backLink + 'predictall/' + id, entity)
+      .then(({ data }) => {
+        if (data) {
+          return Promise.resolve(data)
+        } else {
+          return Promise.reject(new Error('getting error'))
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  },
+
   // Создать объект
   createAsync (entityName, entity) {
     return HTTP.post(backLink + add + entityName, entity)
