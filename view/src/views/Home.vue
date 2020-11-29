@@ -16,7 +16,7 @@
 					<p-user-info :data="userData"/>
 				</div>
 
-				<p-tab-info v-if="showTabComputed" :data="userData" :fields="fields" :label="tabActive"  @save="updateInfo" @predictall="getPredict"/>
+				<p-tab-info v-if="showTabComputed" :data="userData" :fields="fields" :label="tabActive"  @save="updateInfo"/>
 			</div>
 			<p-preloader :show="loadingCard"/>
 		</div>
@@ -93,9 +93,11 @@ export default {
 	},
   methods: {
 		getPredict () {
-			this.$bs.getPredictAsync(this.users)
-				.then(data => {
-					console.log(data)
+			this.loadingTab = true
+			this.$bs.getPredictAsync(this.userData)
+				.then(fields => {
+					this.fields = fields
+					setTimeout(() => { this.loadingTab = false }, 1000)
 				})
 		},
 		showPredict () {
@@ -120,6 +122,9 @@ export default {
 
 		// Получить набор полей вкладки
 		fetchFields () {
+			if (this.tabName.includes('diagnosis')) {
+				return this.getPredict()
+			}
 			this.loadingTab = true
 			this.$bs.getFields(this.tabName)
 				.then(fields => {
