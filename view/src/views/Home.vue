@@ -92,6 +92,14 @@ export default {
 		}
 	},
   methods: {
+		getPredict () {
+			this.loadingTab = true
+			this.$bs.getPredictAsync(this.userData)
+				.then(fields => {
+					this.fields = fields
+					setTimeout(() => { this.loadingTab = false }, 1000)
+				})
+		},
 		showPredict () {
 			this.showDetailed = !this.showDetailed
 		},
@@ -114,6 +122,9 @@ export default {
 
 		// Получить набор полей вкладки
 		fetchFields () {
+			if (this.tabName.includes('diagnosis')) {
+				return this.getPredict()
+			}
 			this.loadingTab = true
 			this.$bs.getFields(this.tabName)
 				.then(fields => {

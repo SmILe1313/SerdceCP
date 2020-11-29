@@ -6,12 +6,6 @@
         <h2>{{user.fio}} ({{user.vozrast}})</h2>
       </div>
       <div class="row">
-        <h4>Состояние здоровья</h4>
-      </div>
-      <div class="row">
-        <p-indicator :value="valueComputed" :color="colorComputed"/>
-      </div>
-      <div class="row">
         <h4>Рекомендации</h4>
       </div>
       <div class="row">
@@ -36,21 +30,12 @@
 
 
 <script>
-import pIndicator from './p-indicator'
 export default {
   props: {
     user: Object,
     status: String
   },
   computed: {
-    colorComputed () {
-      const colorMatrix = {
-        '30': '#aed581',
-        '60': '#ffe082',
-        '90': '#e57373'
-      }
-      return colorMatrix[this.valueComputed]
-    },
     valueComputed () {
       const statusMatrix = {
 				'yellow': 60,
@@ -59,9 +44,6 @@ export default {
 			}
       return statusMatrix[this.status]
     }
-  },
-  components: {
-    pIndicator
   }
 }
 </script>
