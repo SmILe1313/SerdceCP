@@ -9,7 +9,7 @@
 <script>
 export default {
   props: {
-    value: [Number, String],
+    field: Object,
     label: String
   },
   computed: {
@@ -18,6 +18,10 @@ export default {
         'background-color': this.color,
         'width': this.value + '%'
       }
+    },
+    value () {
+      const [value] = this.field.config.options
+      return parseInt(value)
     },
     color () {
       const value = parseInt(this.value)
