@@ -29,12 +29,12 @@ export default {
       const yellow = '#ffe082'
       const red = '#e57373'
       if (value < 35) {
-        return red
+        return green
       }
       if (value < 65) {
         return yellow
       }
-      return green
+      return red
     }
   }
 }
