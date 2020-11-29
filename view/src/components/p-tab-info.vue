@@ -8,9 +8,8 @@
         :class="field.widget">
         <component :is="getWidget(field.widget)" v-model="data[field.fieldName]" :label="field.fieldLabel" :field="field"/>
     </div>
-    <div class="row" v-if="fields.length">
-      <p-button @click="$emit('predictall')" label="Анализировать" key="analyze" v-if="label == 'Диагноз'"/>
-      <p-button @click="$emit('save')" label="Сохранить" key="save" v-else/>
+    <div class="row" v-if="fields.length && label !== 'Диагноз'">
+      <p-button @click="$emit('save')" label="Сохранить" key="save"/>
     </div>
   </div>
 </template>

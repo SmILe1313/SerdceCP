@@ -36,7 +36,7 @@ const bs = {
   // Получить предсказание
   getPredictAsync (entity) {
     const { id } = entity
-    return HTTP.post(backLink + 'predictall/' + id, entity)
+    return HTTP.post(backLink + 'api/predictall/' + id, entity)
       .then(({ data }) => {
         if (data) {
           return Promise.resolve(data)
