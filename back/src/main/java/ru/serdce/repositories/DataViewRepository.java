@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DataViewRepository extends JpaRepository<AllDataView, String> {
-  List<AllDataView> findTop20ByOrderByIdAsc();
+  List<AllDataView> findTop10ByOrderByIdAsc();
 }

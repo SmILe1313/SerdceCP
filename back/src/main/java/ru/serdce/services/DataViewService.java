@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.serdce.entities.AllDataView;
 import ru.serdce.repositories.DataViewRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,7 +40,20 @@ public class DataViewService {
   }
 
   public List<AllDataView> findTop20()  {
-    return (List<AllDataView>) repo.findTop20ByOrderByIdAsc();
+    return (List<AllDataView>) repo.findTop10ByOrderByIdAsc();
+  };
+
+  public List<AllDataView> findPreza()  {
+    List<AllDataView> pasients = new ArrayList<>();
+    pasients.add(repo.findById("54-101-020-01").orElse(null));
+    pasients.add(repo.findById("54-103-120-01").orElse(null));
+    pasients.add(repo.findById("54-602-047-01").orElse(null));
+    pasients.add(repo.findById("54-501-058-01").orElse(null));
+    pasients.add(repo.findById("54-602-040-01").orElse(null));
+    pasients.add(repo.findById("54-503-018-01").orElse(null));
+    pasients.add(repo.findById("54-503-006-01").orElse(null));
+    pasients.addAll(repo.findTop10ByOrderByIdAsc());
+    return pasients ;
   };
 
   public AllDataView get(String id) {

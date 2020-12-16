@@ -39,7 +39,7 @@ public class CrudController {
 
   @GetMapping("/patients") // get/
   public ResponseEntity<List<AllDataView>> getDataView20(){
-    List<AllDataView> dataViewList = dataViewService.findTop20();
+    List<AllDataView> dataViewList = dataViewService.findPreza();
     return new ResponseEntity<List<AllDataView>>(dataViewList, HttpStatus.OK);
   }
 

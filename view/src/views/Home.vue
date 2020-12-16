@@ -113,9 +113,11 @@ export default {
 		fetchUser (id) {
 			this.loadingCard = true
 			this.userData = {}
+			this.fields = []
 			this.$bs.getPatient(id)
 				.then(data => {
 					this.userData = data
+					this.fetchFields()
 					setTimeout(() => { this.loadingCard = false }, 1500)
 				})
 		},
@@ -138,7 +140,7 @@ export default {
 			this.$bs.updateAsync('patients', this.userData)
 				.then(_ => this.fetchUser(this.userActiveId))
 		},
-		
+
 		toggleTab (name) {
 			this.tabActive = name
 		},

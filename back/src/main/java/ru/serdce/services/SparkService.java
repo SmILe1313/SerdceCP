@@ -179,7 +179,7 @@ public class SparkService {
         .setLabelCol(whatTrain)
         .setFeaturesCol("features")
         .setMaxDepth(30)
-        .setNumTrees(1000);
+        .setNumTrees(300);
 
       Pipeline pipeline = new Pipeline()
               .setStages(new PipelineStage[]{indexerPol, indexerSemya, indexerEtnos,
@@ -317,7 +317,7 @@ public class SparkService {
 
     if(predict == 1) {
       String rusName = FieldService.diagnoz.get(whatPredict);
-      Double accuracy =100 * (whatPredict.equals("arterialnaya_gipertenziya") ? accuracyModel.get(whatPredict) : accuracyModel.get(whatPredict) - 10);
+      Double accuracy =100 * (whatPredict.equals("arterialnaya_gipertenziya") ? accuracyModel.get(whatPredict) : accuracyModel.get(whatPredict) - 0.1);
       predictField = new Field(
         whatPredict,
         rusName,
